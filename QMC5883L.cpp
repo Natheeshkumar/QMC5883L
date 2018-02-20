@@ -55,7 +55,7 @@
 #define M_PI 3.14159265358979323846264338327950288
 #endif
 
-static void write_register( int addr, int reg, int value )
+static void write_register( short int addr, short int reg, short int value )
 {
   Wire.beginTransmission(addr);
   Wire.write(reg);
@@ -63,14 +63,14 @@ static void write_register( int addr, int reg, int value )
   Wire.endTransmission();
 }
 
-static int read_register( int addr, int reg, int count )
+static short int read_register( short int addr, short int reg, short int count )
 {
   Wire.beginTransmission(addr);
   Wire.write(reg);
   Wire.endTransmission();
   
   Wire.requestFrom(addr,count);
-  int n = Wire.available();
+ short int n = Wire.available();
   if(n!=count) return 0;
 
   return n;
@@ -87,7 +87,7 @@ void QMC5883L::reset()
   reconfig();
 }
 
-void QMC5883L::setOversampling( int x )
+void QMC5883L::setOversampling( short int x )
 {
   switch(x) {
     case 512:
@@ -106,7 +106,7 @@ void QMC5883L::setOversampling( int x )
   reconfig();
 }
 
-void QMC5883L::setRange( int x )
+void QMC5883L::setRange( short int x )
 {
   switch(x) {
     case 2:
@@ -119,7 +119,7 @@ void QMC5883L::setRange( int x )
   reconfig();
 }
 
-void QMC5883L::setSamplingRate( int x )
+void QMC5883L::setSamplingRate( short int x )
 {
   switch(x) {
     case 10:
@@ -199,7 +199,7 @@ int QMC5883L::readHeading()
   float fx = (float)x/(xhigh-xlow);
   float fy = (float)y/(yhigh-ylow);
 
-  int heading = 180.0*atan2(fy,fx)/M_PI;
+  short int heading = 180.0*atan2(fy,fx)/M_PI;
   if(heading<=0) heading += 360;
   
   return 1;
